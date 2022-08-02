@@ -9,17 +9,5 @@ async function LoginUser({ username, password }) {
   }
 }
 
-async function UserRegister({ username, password, role }) {
-  try {
-    return await fetch(
-      query.REGISTER,
-      username,
-      password,
-      role ? role : "USER"
-    );
-  } catch (e) {
-    console.log(e);
-  }
-}
 
-export { LoginUser, UserRegister };
+export { LoginUser };
