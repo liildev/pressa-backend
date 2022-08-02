@@ -1,4 +1,4 @@
-import { LoginUser } from './model.js';
+import { LoginUser, UserRegister } from './model.js';
 import jwt from '../../lib/jwt.js';
 
 async function LOGIN(req, res) {
@@ -10,7 +10,7 @@ async function LOGIN(req, res) {
       res.status(200).json({
         status: 200,
         message: '',
-        token: jwt.sign({ admin_id: user.admin_id }),
+        token: jwt.sign({ admin_id: user.admin_id , role: user.role}),
         data: user,
       });
     } else {
@@ -28,20 +28,19 @@ async function LOGIN(req, res) {
 
 async function REGISTER(req, res, next) {
   try {
-    let newUser = await model.UserRegister(req.body);
+    let newUser = await UserRegister(req.body);
     delete newUser?.password;
     if (newUser) {
       res.status(200).json({
         status: 200,
         message: "You are registered",
-        token: jwt.sign({ userId: newUser.user_id, role: newUser.role }),
+        token: jwt.sign({ admin_id: newUser.admin_id, role: newUser.role }),
         data: newUser,
       });
-    } else {
-      next(ApiError.unauthorized("Client Error"));
-    }
-  } catch (error) {
-    next(ApiError.internal(error.message));
+    } 
+
+  } catch (e) {
+    console.error(e);
   }
 }
 export default { LOGIN, REGISTER };
