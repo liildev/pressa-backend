@@ -10,18 +10,6 @@ export default function (server) {
     },
   });
 
-//   io.on('connection', async (socket) => {
-//     let undefinedPosts = await fetchAll(GET_POSTS, 'undefined');
-//     let activePosts = await fetchAll(GET_POSTS, 'active');
-//     let deletedPosts = await fetchAll(GET_POSTS, 'deleted');
-//     socket.emit('get_undefined_posts', undefinedPosts);
-//     socket.emit('get_active_posts', activePosts);
-//     socket.emit('get_deleted_posts', deletedPosts);
-//     socket.on('post', (data)=>{
-//
-//     })
-//   });
-// }
   io.on('connection', (socket) => {
 
     socket.on('post', async (data, date, category, type)=>{
