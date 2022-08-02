@@ -1,1 +1,1 @@
-insert into admins (username, password) values ('Nozim', '12345678');
+insert into admins (username, password, role ) values ('Nozim', '12345678', 'ADMIN');

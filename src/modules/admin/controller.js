@@ -25,4 +25,23 @@ async function LOGIN(req, res) {
   }
 }
 
-export default { LOGIN };
+
+async function REGISTER(req, res, next) {
+  try {
+    let newUser = await model.UserRegister(req.body);
+    delete newUser?.password;
+    if (newUser) {
+      res.status(200).json({
+        status: 200,
+        message: "You are registered",
+        token: jwt.sign({ userId: newUser.user_id, role: newUser.role }),
+        data: newUser,
+      });
+    } else {
+      next(ApiError.unauthorized("Client Error"));
+    }
+  } catch (error) {
+    next(ApiError.internal(error.message));
+  }
+}
+export default { LOGIN, REGISTER };
